@@ -19,7 +19,7 @@ const YouTubePicker = ({ disabled, customElementApi }) => {
   useEffect(() => {
     const height: number = containerRef.current.clientHeight;
     customElementApi.setHeight(height);
-  }, [videoId]);
+  });
 
   const handleInput = e => {
     const searchTerm = e.target.value;
@@ -37,6 +37,11 @@ const YouTubePicker = ({ disabled, customElementApi }) => {
   };
 
   const testSearch = videoId => {
+    if (!videoId) {
+      setResults(null);
+      return;
+    }
+
     fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&type=video&videoEmbeddable=true&q=${videoId}&key=${
         config.youTubeApiKey
@@ -98,16 +103,22 @@ const YouTubeInput = ({ disabled, handleInput, results }) => {
 
 const YouTubePreview = ({ videoId }) => {
   return (
-    videoId && (
-      <div>
+    <div className="preview">
+      {(videoId && (
         <iframe
           width="848"
           height="480"
           src={`https://www.youtube.com/embed/${videoId}`}
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         />
-      </div>
-    )
+      )) || (
+        <img
+          src="https://img.youtube.com/vi/preview/1.jpg"
+          width="848"
+          height="480"
+        />
+      )}
+    </div>
   );
 };
 
