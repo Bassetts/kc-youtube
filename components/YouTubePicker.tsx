@@ -10,7 +10,7 @@ const YouTubePicker = ({ disabled, customElementApi }) => {
     value => {
       testSearch(value);
     },
-    500,
+    300,
     []
   );
   const [results, setResults] = useState(null);
@@ -50,54 +50,54 @@ const YouTubePicker = ({ disabled, customElementApi }) => {
       .then(function(response) {
         return response.json();
       })
-      .then(function(myJson) {
-        const json = JSON.stringify(myJson);
-        console.log(myJson);
-        setResults(myJson);
+      .then(function(results) {
+        const mappedResults = results.items.map(
+          ({
+            id: { videoId },
+            snippet: {
+              title,
+              thumbnails: { default: thumbnail }
+            }
+          }) => {
+            return { videoId, title, thumbnail };
+          }
+        );
+        setResults(mappedResults);
       });
   };
 
   return (
     <div ref={containerRef}>
-      <YouTubeInput
-        disabled={disabled}
-        handleInput={handleInput}
-        results={results}
-      />
+      <YouTubeInput disabled={disabled} handleInput={handleInput} />
+      <YouTubeResults results={results} />
       <YouTubePreview videoId={videoId} />
     </div>
   );
 };
 
-const YouTubeInput = ({ disabled, handleInput, results }) => {
-  console.log(results && results.items);
+const YouTubeInput = ({ disabled, handleInput }) => {
   return (
-    <>
-      <input
-        type="text"
-        placeholder="YouTube URL or Video ID"
-        disabled={disabled}
-        onChange={handleInput}
-      />
-      {results && results.items && (
-        <div className="search-results">
-          {results.items.map(
-            ({
-              id: { videoId },
-              snippet: {
-                title,
-                thumbnails: { default: thumbnail }
-              }
-            }) => (
-              <div key={videoId}>
-                <img src={thumbnail.url} />
-                <span dangerouslySetInnerHTML={{ __html: title }} />
-              </div>
-            )
-          )}
-        </div>
-      )}
-    </>
+    <input
+      type="text"
+      placeholder="YouTube URL or Video ID"
+      disabled={disabled}
+      onChange={handleInput}
+    />
+  );
+};
+
+const YouTubeResults = ({ results }) => {
+  return (
+    results && (
+      <div className="search-results">
+        {results.map(result => (
+          <div key={result.videoId}>
+            <img src={result.thumbnail.url} />
+            <span dangerouslySetInnerHTML={{ __html: result.title }} />
+          </div>
+        ))}
+      </div>
+    )
   );
 };
 
