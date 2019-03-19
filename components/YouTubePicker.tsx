@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useDebouncedCallback } from "use-debounce";
-import config from "../config.js";
+import React, { useState, useRef, useEffect, Suspense } from "react";
+import { useDebounce } from "use-debounce";
+import Input from "./Input";
+import Preview from "./Preview";
+import Results from "./Results";
 
 const YouTubePicker = ({ disabled, customElementApi }) => {
   const videoIdRegex = /(?:youtube(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)?([a-zA-Z0-9_-]{11})/;
 
-  const [videoId, setVideoId] = useState(null);
-  const [debouncedCallback] = useDebouncedCallback(
-    value => {
-      testSearch(value);
-    },
-    300,
-    []
-  );
-  const [results, setResults] = useState(null);
+  const [videoId, setVideoId] = useState(undefined);
+  const [searchTerm, setSearchTerm] = useState(undefined);
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 200);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -23,8 +19,7 @@ const YouTubePicker = ({ disabled, customElementApi }) => {
 
   const handleInput = e => {
     const searchTerm = e.target.value;
-    // testSearch(searchTerm);
-    debouncedCallback(searchTerm);
+    setSearchTerm(searchTerm);
     let matches = videoIdRegex.exec(searchTerm);
 
     if (matches && matches.length > 1) {
@@ -35,89 +30,16 @@ const YouTubePicker = ({ disabled, customElementApi }) => {
       setVideoId(null);
     }
   };
-
-  const testSearch = videoId => {
-    if (!videoId) {
-      setResults(null);
-      return;
-    }
-
-    fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&type=video&videoEmbeddable=true&q=${videoId}&key=${
-        config.youTubeApiKey
-      }`
-    )
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(results) {
-        const mappedResults = results.items.map(
-          ({
-            id: { videoId },
-            snippet: {
-              title,
-              thumbnails: { default: thumbnail }
-            }
-          }) => {
-            return { videoId, title, thumbnail };
-          }
-        );
-        setResults(mappedResults);
-      });
-  };
-
+  
   return (
     <div ref={containerRef}>
-      <YouTubeInput disabled={disabled} handleInput={handleInput} />
-      <YouTubeResults results={results} />
-      <YouTubePreview videoId={videoId} />
-    </div>
-  );
-};
-
-const YouTubeInput = ({ disabled, handleInput }) => {
-  return (
-    <input
-      type="text"
-      placeholder="YouTube URL or Video ID"
-      disabled={disabled}
-      onChange={handleInput}
-    />
-  );
-};
-
-const YouTubeResults = ({ results }) => {
-  return (
-    results && (
-      <div className="search-results">
-        {results.map(result => (
-          <div key={result.videoId}>
-            <img src={result.thumbnail.url} />
-            <span dangerouslySetInnerHTML={{ __html: result.title }} />
-          </div>
-        ))}
+      <div>
+        <Input disabled={disabled} handleInput={handleInput} />
+        <Suspense fallback="Loading...">
+          {debouncedSearchTerm && <Results searctTerm={debouncedSearchTerm} />}
+        </Suspense>
+        <Preview videoId={videoId} />
       </div>
-    )
-  );
-};
-
-const YouTubePreview = ({ videoId }) => {
-  return (
-    <div className="preview">
-      {(videoId && (
-        <iframe
-          width="848"
-          height="480"
-          src={`https://www.youtube.com/embed/${videoId}`}
-          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        />
-      )) || (
-        <img
-          src="https://img.youtube.com/vi/preview/1.jpg"
-          width="848"
-          height="480"
-        />
-      )}
     </div>
   );
 };
