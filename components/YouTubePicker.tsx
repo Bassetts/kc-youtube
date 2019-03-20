@@ -4,25 +4,35 @@ import Input from "./Input";
 import Preview from "./Preview";
 import Results from "./Results";
 import Downshift from "downshift";
-
-import config from "../config";
+import Thumbnail from "./Thumbnail";
 
 const YouTubePicker = ({ disabled, customElementApi }) => {
   const [videoId, setVideoId] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState(undefined);
-  const [debouncedSearchTerm] = useDebounce(searchTerm, 200);
-  const containerRef = useRef(null);
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
+  const containerRef = useRef(undefined);
 
   useEffect(() => {
     const height: number = containerRef.current.clientHeight;
     customElementApi.setHeight(height);
-  });
+  }, [containerRef]);
 
   return (
     <div ref={containerRef}>
       <div>
-        <Downshift onInputValueChange={value => setSearchTerm(value)}>
-          {({ getInputProps, getMenuProps, getItemProps, isOpen }) => {
+        <Downshift
+          onChange={selection => setVideoId(selection.videoId)}
+          itemToString={item => (item ? item.title : "")}
+          onInputValueChange={value => setSearchTerm(value)}
+        >
+          {({
+            getInputProps,
+            getMenuProps,
+            getItemProps,
+            isOpen,
+            highlightedIndex,
+            selectedItem
+          }) => {
             return (
               <div>
                 <Input
@@ -36,11 +46,34 @@ const YouTubePicker = ({ disabled, customElementApi }) => {
                     {isOpen ? (
                       <Results searchTerm={debouncedSearchTerm}>
                         {({ items }) =>
-                          items.map(item => (
-                            <div key={item.videoId} {...getItemProps({ item })}>
-                              <img src={item.thumbnail.url} />
+                          items.map((item, index) => (
+                            <div
+                              {...getItemProps({
+                                key: item.videoId,
+                                index,
+                                item,
+                                style: {
+                                  backgroundColor:
+                                    highlightedIndex === index
+                                      ? `lightgray`
+                                      : `white`,
+                                  fontWeight:
+                                    selectedItem &&
+                                    selectedItem.videoId === item.videoId
+                                      ? `bold`
+                                      : `normal`
+                                }
+                              })}
+                            >
+                              <Thumbnail
+                                width="120"
+                                height="90"
+                                src={item.thumbnail.url}
+                              />
                               <span
-                                dangerouslySetInnerHTML={{ __html: item.title }}
+                                dangerouslySetInnerHTML={{
+                                  __html: item.title
+                                }}
                               />
                             </div>
                           ))

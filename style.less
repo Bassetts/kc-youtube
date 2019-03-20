@@ -8,14 +8,6 @@ input {
   width: 100%;
 }
 
-.search-results {
-  position: absolute;
-  max-height: 450px;
-  overflow: scroll;
-  background: white;
-  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
-}
-
 .preview {
   display: flex;
   justify-content: center;
@@ -25,4 +17,24 @@ input {
 
 .preview iframe {
   border: none;
+}
+
+.lazy-load {
+  display: inline-block;
+}
+
+.loading {
+  opacity: 0;
+}
+
+.loaded {
+  opacity: 0;
+  animation: fadeInImg 0.5s linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInImg {
+  to {
+    opacity: 1;
+  }
 }
