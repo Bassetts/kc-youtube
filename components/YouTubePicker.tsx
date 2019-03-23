@@ -1,27 +1,35 @@
 import React, { useState, useRef, useEffect, Suspense } from "react";
 import { useDebounce } from "use-debounce";
-import Input from "./Input";
-import Preview from "./Preview";
-import Results from "./Results";
 import Downshift from "downshift";
-import Thumbnail from "./Thumbnail";
+
+import Input from "./Input";
+import Menu from "./Menu";
+import Search from "./Search";
+import Result from "./Result";
+import Preview from "./Preview";
 
 const YouTubePicker = ({ disabled, customElementApi }) => {
-  const [videoId, setVideoId] = useState(undefined);
-  const [searchTerm, setSearchTerm] = useState(undefined);
+  const [videoId, setVideoId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState(null);
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
-  const containerRef = useRef(undefined);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const height: number = containerRef.current.clientHeight;
     customElementApi.setHeight(height);
   }, [containerRef]);
 
+  useEffect(() => {
+    customElementApi.setValue(videoId);
+  }, [videoId]);
+
   return (
     <div ref={containerRef}>
       <div>
         <Downshift
-          onChange={selection => setVideoId(selection.videoId)}
+          onChange={selection =>
+            setVideoId(selection ? selection.videoId : null)
+          }
           itemToString={item => (item ? item.title : "")}
           onInputValueChange={value => setSearchTerm(value)}
         >
@@ -31,56 +39,42 @@ const YouTubePicker = ({ disabled, customElementApi }) => {
             getItemProps,
             isOpen,
             highlightedIndex,
-            selectedItem
+            selectedItem,
+            clearSelection
           }) => {
             return (
               <div>
                 <Input
+                  clearSelection={clearSelection}
                   {...getInputProps({
                     disabled,
                     placeholder: `YouTube URL or Video ID`
                   })}
                 />
                 <Suspense fallback="Loading...">
-                  <div {...getMenuProps()}>
+                  <Menu {...getMenuProps()}>
                     {isOpen ? (
-                      <Results searchTerm={debouncedSearchTerm}>
+                      <Search searchTerm={debouncedSearchTerm}>
                         {({ items }) =>
                           items.map((item, index) => (
-                            <div
+                            <Result
+                              isActive={highlightedIndex === index}
+                              isSelected={
+                                selectedItem &&
+                                selectedItem.videoId === item.videoId
+                              }
+                              item={item}
                               {...getItemProps({
                                 key: item.videoId,
                                 index,
-                                item,
-                                style: {
-                                  backgroundColor:
-                                    highlightedIndex === index
-                                      ? `lightgray`
-                                      : `white`,
-                                  fontWeight:
-                                    selectedItem &&
-                                    selectedItem.videoId === item.videoId
-                                      ? `bold`
-                                      : `normal`
-                                }
+                                item
                               })}
-                            >
-                              <Thumbnail
-                                width="120"
-                                height="90"
-                                src={item.thumbnail.url}
-                              />
-                              <span
-                                dangerouslySetInnerHTML={{
-                                  __html: item.title
-                                }}
-                              />
-                            </div>
+                            />
                           ))
                         }
-                      </Results>
+                      </Search>
                     ) : null}
-                  </div>
+                  </Menu>
                 </Suspense>
               </div>
             );

@@ -1,7 +1,7 @@
 import useFetch from "fetch-suspense";
 import config from "../config";
 
-const Results = ({ searchTerm, ...props }) => {
+const Search = ({ searchTerm, ...props }) => {
   if (!searchTerm) {
     return null;
   }
@@ -11,21 +11,22 @@ const Results = ({ searchTerm, ...props }) => {
       config.youTubeApiKey
     }`
   );
-  const items =
-    results &&
-    results.items.map(
-      ({
-        id: { videoId },
-        snippet: {
-          title,
-          thumbnails: { default: thumbnail }
-        }
-      }) => {
-        return { videoId, title, thumbnail };
+  if (!results || !results.items) {
+    return null;
+  }
+  const items = results.items.map(
+    ({
+      id: { videoId },
+      snippet: {
+        title,
+        thumbnails: { default: thumbnail }
       }
-    );
+    }) => {
+      return { videoId, title, thumbnail };
+    }
+  );
 
   return props.children({ items });
 };
 
-export default Results;
+export default Search;
