@@ -1,15 +1,13 @@
 import React from "react";
 
-import ResultWrapper from "./ResultWrapper"
+import ResultWrapper from "./ResultWrapper";
 import Thumbnail from "../Thumbnail";
 import ResultText from "./ResultText";
 
-const Result = ({item, ...props}) => {
+const Result = ({ item, ...props }) => {
   return (
-    <ResultWrapper
-      {...props}
-    >
-      <Thumbnail width="120" height="90" src={item.thumbnail.url} />
+    <ResultWrapper {...props}>
+      <Thumbnail image={item.thumbnail} />
       <ResultText
         dangerouslySetInnerHTML={{
           __html: item.title

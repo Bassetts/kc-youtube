@@ -14,6 +14,7 @@ const Search = ({ searchTerm, ...props }) => {
   if (!results || !results.items) {
     return null;
   }
+
   const items = results.items.map(
     ({
       id: { videoId },

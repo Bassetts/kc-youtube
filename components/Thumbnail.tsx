@@ -1,39 +1,20 @@
-import React, { useState } from "react";
-import LazyLoad from "react-lazy-load";
-import styled, { css, keyframes } from "styled-components";
+import React from "react";
+import styled from "styled-components";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/opacity.css";
 
-const StyledLazyLoad = styled(LazyLoad)`
-  display: inline-block;
+const StyledLazyLoadImage = styled(LazyLoadImage)`
+  background-color: #eee;
 `;
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const Image = styled.img`
-  opacity: 0;
-
-  ${loaded =>
-    loaded &&
-    css`
-      animation: ${fadeIn} 0.5s linear;
-      animation-fill-mode: forwards;
-    `}
-`;
-
-const Thumbnail = props => {
-  const [loaded, setLoaded] = useState(false);
-
+const Thumbnail = ({ image: { width, height, url } }) => {
   return (
-    <StyledLazyLoad className="lazy-load img-container">
-      <Image {...props} loaded={loaded} onLoad={() => setLoaded(true)} />
-    </StyledLazyLoad>
+    <StyledLazyLoadImage
+      width={width}
+      height={height}
+      src={url}
+      effect="opactiy"
+    />
   );
 };
 

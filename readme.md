@@ -21,7 +21,7 @@ git clone https://github.com/Bassetts/kc-youtube-picker.git ./client/custom-elem
 cd ./client/custom-elements/kc-youtube-picker
 
 # install project dependencies
-npm i --save @types/styled-components downshift fetch-suspense react react-dom react-lazy-load styled-components use-debounce
+npm i --save @types/styled-components downshift fetch-suspense react react-dom react-lazy-load-image-component styled-components use-debounce
 
 # create config
 cp config.example.js config.js
