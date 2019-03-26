@@ -1,5 +1,4 @@
 import "../../shared/custom-module.css";
-import "./style.less";
 
 import React from "react";
 import ReactDom from "react-dom";
