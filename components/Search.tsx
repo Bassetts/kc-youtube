@@ -1,6 +1,5 @@
 import useFetch from "fetch-suspense";
 
-import config from "../config";
 import { decodeHtml } from "../utils";
 
 const Search = ({ searchTerm, ...props }) => {
