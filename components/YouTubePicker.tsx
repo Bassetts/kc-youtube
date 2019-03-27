@@ -53,7 +53,7 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
               />
               <Suspense fallback="Loading...">
                 <Menu {...getMenuProps()}>
-                  {isOpen ? (
+                  {isOpen && (
                     <Search searchTerm={debouncedSearchTerm}>
                       {({ items }) =>
                         items.map((item, index) => (
@@ -73,7 +73,7 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
                         ))
                       }
                     </Search>
-                  ) : null}
+                  )}
                 </Menu>
               </Suspense>
             </div>
