@@ -48,7 +48,7 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
                 clearSelection={clearSelection}
                 {...getInputProps({
                   disabled,
-                  placeholder: `YouTube URL or Video ID`
+                  placeholder: `Enter a search term, YouTube URL, or video ID`
                 })}
               />
               <Suspense fallback="Loading...">
