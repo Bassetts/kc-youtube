@@ -8,8 +8,8 @@ const StyledParagraph = styled.p`
   text-overflow: ellipsis;
 `;
 
-const ResultText = ({ title }) => {
-  return <StyledParagraph title={title}>{title}</StyledParagraph>;
+const ResultText = ({ text }) => {
+  return <StyledParagraph title={text}>{text}</StyledParagraph>;
 };
 
 export default ResultText;

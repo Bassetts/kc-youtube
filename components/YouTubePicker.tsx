@@ -5,7 +5,7 @@ import Downshift from "downshift";
 import Input from "./Input";
 import Menu from "./Menu";
 import Search from "./Search";
-import Result from "./Result";
+import Result, { ResultWrapper, ResultText } from "./Result";
 import Preview from "./Preview";
 
 const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
@@ -51,7 +51,15 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
                   placeholder: `Enter a search term, YouTube URL, or video ID`
                 })}
               />
-              <Suspense fallback="Loading...">
+              <Suspense
+                fallback={
+                  <Menu {...getMenuProps()}>
+                    <ResultWrapper>
+                      <ResultText text="Loading..." />
+                    </ResultWrapper>
+                  </Menu>
+                }
+              >
                 <Menu {...getMenuProps()}>
                   {isOpen && (
                     <Search searchTerm={debouncedSearchTerm}>
