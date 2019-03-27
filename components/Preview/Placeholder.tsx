@@ -15,7 +15,7 @@ const Placeholder = () => {
     <Wrapper>
       <p>Select a video</p>
     </Wrapper>
-  )
+  );
 };
 
 export default Placeholder;
