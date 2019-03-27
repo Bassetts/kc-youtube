@@ -52,16 +52,14 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
                   placeholder: `Enter a search term, YouTube URL, or video ID`
                 })}
               />
-              <Suspense
-                fallback={
-                  <Menu {...getMenuProps()}>
+              <Menu {...getMenuProps()}>
+                <Suspense
+                  fallback={
                     <ResultWrapper>
                       <ResultText text="Loading..." />
                     </ResultWrapper>
-                  </Menu>
-                }
-              >
-                <Menu {...getMenuProps()}>
+                  }
+                >
                   {isOpen && (
                     <Search searchTerm={debouncedSearchTerm}>
                       {({ items }) =>
@@ -83,8 +81,8 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
                       }
                     </Search>
                   )}
-                </Menu>
-              </Suspense>
+                </Suspense>
+              </Menu>
             </div>
           );
         }}
