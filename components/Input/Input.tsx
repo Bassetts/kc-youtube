@@ -17,14 +17,14 @@ const StyledInput = styled.input`
   }
 `;
 
-const Input = ({ clearSelection, ...props }) => {
+const Input = ({ clearSelection, hasSelection, ...props }) => {
   return (
     <Wrapper>
       <StyledInput {...props} />
       <Button
         onClick={clearSelection}
         label="clear selection"
-        disabled={props.disabled}
+        disabled={props.disabled || !hasSelection}
       />
     </Wrapper>
   );

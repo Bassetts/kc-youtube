@@ -46,6 +46,7 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
             <div>
               <Input
                 clearSelection={clearSelection}
+                hasSelection={!!selectedItem}
                 {...getInputProps({
                   disabled,
                   placeholder: `Enter a search term, YouTube URL, or video ID`
