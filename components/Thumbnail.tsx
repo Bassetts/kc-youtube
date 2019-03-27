@@ -7,12 +7,13 @@ const StyledLazyLoadImage = styled(LazyLoadImage)`
   background-color: #eee;
 `;
 
-const Thumbnail = ({ image: { width, height, url } }) => {
+const Thumbnail = ({ image: { width, height, url }, alt }) => {
   return (
     <StyledLazyLoadImage
       width={width}
       height={height}
       src={url}
+      alt={alt}
       effect="opactiy"
     />
   );

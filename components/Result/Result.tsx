@@ -7,8 +7,8 @@ import ResultText from "./ResultText";
 const Result = ({ item, ...props }) => {
   return (
     <ResultWrapper {...props}>
-      <Thumbnail image={item.thumbnail} />
-      <ResultText>{item.title}</ResultText>
+      <Thumbnail image={item.thumbnail} alt={item.title} />
+      <ResultText title={item.title} />
     </ResultWrapper>
   );
 };
