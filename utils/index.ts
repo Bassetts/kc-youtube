@@ -1,7 +1,11 @@
+const parser = new DOMParser();
+
 const decodeHtml = (html: string) => {
-  var doc = document.createElement("div");
-  doc.innerHTML = html;
-  return doc.innerHTML;
+  const dom = parser.parseFromString(
+    "<!doctype html><body>" + html,
+    "text/html"
+  );
+  return dom.body.textContent;
 };
 
 export { decodeHtml };
