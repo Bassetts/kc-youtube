@@ -10,6 +10,7 @@ CustomElement.init((element, _context) => {
     <YouTubePicker
       disabled={element.disabled}
       customElementApi={CustomElement}
+      initialVideoId={element.value}
     />,
     document.querySelector("#reactapp")
   );

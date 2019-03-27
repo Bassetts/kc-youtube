@@ -8,8 +8,8 @@ import Search from "./Search";
 import Result from "./Result";
 import Preview from "./Preview";
 
-const YouTubePicker = ({ disabled, customElementApi }) => {
-  const [videoId, setVideoId] = useState(null);
+const YouTubePicker = ({ disabled, customElementApi, initialVideoId }) => {
+  const [videoId, setVideoId] = useState(initialVideoId);
   const [searchTerm, setSearchTerm] = useState(null);
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
   const containerRef = useRef(null);
