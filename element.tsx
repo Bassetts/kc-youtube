@@ -8,7 +8,7 @@ import YouTubePicker from "./components/YouTubePicker";
 CustomElement.init((element, _context) => {
   ReactDom.render(
     <YouTubePicker
-      disabled={element.disabled}
+      isDisabled={element.disabled}
       customElementApi={CustomElement}
       initialVideoId={element.value}
     />,

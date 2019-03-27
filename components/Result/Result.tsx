@@ -8,11 +8,7 @@ const Result = ({ item, ...props }) => {
   return (
     <ResultWrapper {...props}>
       <Thumbnail image={item.thumbnail} />
-      <ResultText
-        dangerouslySetInnerHTML={{
-          __html: item.title
-        }}
-      />
+      <ResultText>{item.title}</ResultText>
     </ResultWrapper>
   );
 };

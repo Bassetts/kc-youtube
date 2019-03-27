@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  background-color: #f5f5f5;
+  background-color: ${({ disabled }) => (disabled ? `#dadada` : `#f5f5f5`)}
   border: none;
   position: absolute;
   right: 0;
@@ -15,15 +15,15 @@ const StyledButton = styled.button`
   align-items: center;
   stroke: #616161;
 
-  :hover {
+  :hover:enabled {
     background-color: #2196f3;
     stroke: #fff;
   }
 `;
 
-const Button = ({ onClick, label }) => {
+const Button = ({ onClick, label, disabled }) => {
   return (
-    <StyledButton onClick={onClick} aria-label={label}>
+    <StyledButton onClick={onClick} aria-label={label} disabled={disabled}>
       <svg
         viewBox="0 0 20 20"
         preserveAspectRatio="none"

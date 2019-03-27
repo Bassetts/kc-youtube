@@ -1,5 +1,7 @@
 import useFetch from "fetch-suspense";
+
 import config from "../config";
+import { decodeHtml } from "../utils";
 
 const Search = ({ searchTerm, ...props }) => {
   if (!searchTerm) {
@@ -23,7 +25,7 @@ const Search = ({ searchTerm, ...props }) => {
         thumbnails: { default: thumbnail }
       }
     }) => {
-      return { videoId, title, thumbnail };
+      return { videoId, title: decodeHtml(title), thumbnail };
     }
   );
 
