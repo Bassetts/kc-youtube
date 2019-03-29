@@ -3,11 +3,11 @@ import "../../shared/custom-module.css";
 import React from "react";
 import ReactDom from "react-dom";
 
-import YouTubePicker from "./components/YouTubePicker";
+import YouTube from "./components/YouTube";
 
 CustomElement.init((element, _context) => {
   ReactDom.render(
-    <YouTubePicker
+    <YouTube
       isDisabled={element.disabled}
       customElementApi={CustomElement}
       initialVideoId={element.value}

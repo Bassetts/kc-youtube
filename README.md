@@ -1,4 +1,4 @@
-# YouTube video picker custom element for Kentico Cloud
+# YouTube video custom element for Kentico Cloud
 
 ## How to use
 
@@ -17,15 +17,15 @@ cd custom-element-devkit
 npm install
 
 # Clone this project repository into the devkit
-git clone https://github.com/Bassetts/kc-youtube-picker.git ./client/custom-elements/kc-youtube-picker
+git clone https://github.com/Bassetts/kc-youtube.git ./client/custom-elements/kc-youtube
 
 # Install project dependencies
 npm i --save @types/styled-components downshift fetch-suspense react react-dom react-lazy-load-image-component styled-components use-debounce
 
 # Build and copy config file
-npm start -- -cjsm && cp ./client/custom-elements/kc-youtube-picker/config.example.js ./built/custom-elements/kc-youtube-picker/config.js
+npm start -- -cjsm && cp ./client/custom-elements/kc-youtube/config.example.js ./built/custom-elements/kc-youtube/config.js
 ```
 
-Edit `./built/custom-elements/kc-youtube-picker/config.json` and set your YouTube API key.
+Edit `./built/custom-elements/kc-youtube/config.json` and set your YouTube API key.
 
-`/built/custom-elements/kc-youtube-picker/` can now be deployed to a web server. Following the [instructions](https://developer.kenticocloud.com/docs/integrating-content-editing-features#section-3-displaying-a-custom-element-in-kentico-cloud) to add the custom element to your Kentico Cloud instance.
+`/built/custom-elements/kc-youtube/` can now be deployed to a web server. Following the [instructions](https://developer.kenticocloud.com/docs/integrating-content-editing-features#section-3-displaying-a-custom-element-in-kentico-cloud) to add the custom element to your Kentico Cloud instance.

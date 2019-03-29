@@ -8,7 +8,7 @@ import Search from "./Search";
 import Result, { ResultWrapper, ResultText } from "./Result";
 import Preview from "./Preview";
 
-const YouTubePicker = ({
+const YouTube = ({
   isDisabled,
   customElementApi,
   initialVideoId,
@@ -98,4 +98,4 @@ const YouTubePicker = ({
   );
 };
 
-export default YouTubePicker;
+export default YouTube;
