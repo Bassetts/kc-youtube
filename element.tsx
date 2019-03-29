@@ -11,6 +11,7 @@ CustomElement.init((element, _context) => {
       isDisabled={element.disabled}
       customElementApi={CustomElement}
       initialVideoId={element.value}
+      apiKey={element.config.apiKey}
     />,
     document.querySelector("#reactapp")
   );

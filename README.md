@@ -26,6 +26,6 @@ npm i --save @types/styled-components downshift fetch-suspense react react-dom r
 npm start -- -cjsm && cp ./client/custom-elements/kc-youtube-picker/config.example.js ./built/custom-elements/kc-youtube-picker/config.js
 ```
 
-Edit `./built/custom-elements/kc-youtube-picker/config.js` and set your YouTube API key.
+Edit `./built/custom-elements/kc-youtube-picker/config.json` and set your YouTube API key.
 
 `/built/custom-elements/kc-youtube-picker/` can now be deployed to a web server. Following the [instructions](https://developer.kenticocloud.com/docs/integrating-content-editing-features#section-3-displaying-a-custom-element-in-kentico-cloud) to add the custom element to your Kentico Cloud instance.

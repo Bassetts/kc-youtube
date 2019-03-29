@@ -8,7 +8,12 @@ import Search from "./Search";
 import Result, { ResultWrapper, ResultText } from "./Result";
 import Preview from "./Preview";
 
-const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
+const YouTubePicker = ({
+  isDisabled,
+  customElementApi,
+  initialVideoId,
+  apiKey
+}) => {
   const [disabled, setDisabled] = useState(isDisabled);
   const [videoId, setVideoId] = useState(initialVideoId);
   const [searchTerm, setSearchTerm] = useState(null);
@@ -32,6 +37,7 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
         onChange={selection => setVideoId(selection ? selection.videoId : null)}
         itemToString={item => (item ? item.title : "")}
         onInputValueChange={value => setSearchTerm(value)}
+        initialSelectedItem={initialVideoId}
       >
         {({
           getInputProps,
@@ -61,7 +67,7 @@ const YouTubePicker = ({ isDisabled, customElementApi, initialVideoId }) => {
                   }
                 >
                   {isOpen && (
-                    <Search searchTerm={debouncedSearchTerm}>
+                    <Search searchTerm={debouncedSearchTerm} apiKey={apiKey}>
                       {({ items }) =>
                         items.map((item, index) => (
                           <Result
