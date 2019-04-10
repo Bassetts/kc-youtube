@@ -8,14 +8,9 @@ import Search from "./Search";
 import Result, { ResultWrapper, ResultText } from "./Result";
 import Preview from "./Preview";
 
-const YouTube = ({
-  isDisabled,
-  customElementApi,
-  initialVideoId,
-  apiKey
-}) => {
+const YouTube = ({ isDisabled, customElementApi, initialValue, apiKey }) => {
   const [disabled, setDisabled] = useState(isDisabled);
-  const [videoId, setVideoId] = useState(initialVideoId);
+  const [selectedVideo, setSelectedVideo] = useState(JSON.parse(initialValue));
   const [searchTerm, setSearchTerm] = useState(null);
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
   const containerRef = useRef(null);
@@ -28,16 +23,23 @@ const YouTube = ({
   }, [containerRef]);
 
   useEffect(() => {
-    customElementApi.setValue(videoId);
-  }, [videoId]);
+    customElementApi.setValue(JSON.stringify(selectedVideo));
+  }, [selectedVideo]);
 
   return (
     <div ref={containerRef}>
       <Downshift
-        onChange={selection => setVideoId(selection ? selection.videoId : null)}
+        onChange={selection => {
+          if (!selection) {
+            setSelectedVideo(null);
+          } else {
+            const { title, videoId } = selection;
+            setSelectedVideo({ title, videoId });
+          }
+        }}
         itemToString={item => (item ? item.title : "")}
         onInputValueChange={value => setSearchTerm(value)}
-        initialSelectedItem={initialVideoId}
+        initialSelectedItem={selectedVideo}
       >
         {({
           getInputProps,
@@ -93,7 +95,7 @@ const YouTube = ({
           );
         }}
       </Downshift>
-      <Preview videoId={videoId} />
+      <Preview videoId={selectedVideo && selectedVideo.videoId} />
     </div>
   );
 };
