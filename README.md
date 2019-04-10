@@ -23,9 +23,15 @@ git clone https://github.com/Bassetts/kc-youtube.git ./client/custom-elements/kc
 npm i --save @types/styled-components downshift fetch-suspense react react-dom react-lazy-load-image-component styled-components use-debounce
 
 # Build and copy config file
-npm start -- -cjsm && cp ./client/custom-elements/kc-youtube/config.example.js ./built/custom-elements/kc-youtube/config.js
+npm start -- -cjsm
 ```
 
-Edit `./built/custom-elements/kc-youtube/config.json` and set your YouTube API key.
-
 `/built/custom-elements/kc-youtube/` can now be deployed to a web server. Following the [instructions](https://developer.kenticocloud.com/docs/integrating-content-editing-features#section-3-displaying-a-custom-element-in-kentico-cloud) to add the custom element to your Kentico Cloud instance.
+
+The YouTube V3 API key needs to be provided in the JSON parameters of the custom element e.g.
+
+```json
+{
+  "apiKey": "<YOUR API KEY>"
+}
+```
