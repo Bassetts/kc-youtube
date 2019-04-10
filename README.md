@@ -8,7 +8,7 @@ You will need an API key for the YouTube V3 API. Follow the instructions at http
 
 ### Setup
 
-```
+```zsh
 # Clone the Kentico custom element devkit repository
 git clone https://github.com/Kentico/custom-element-devkit.git
 cd custom-element-devkit
@@ -20,7 +20,8 @@ npm install
 git clone https://github.com/Bassetts/kc-youtube.git ./client/custom-elements/kc-youtube
 
 # Install project dependencies
-npm i --save @types/styled-components downshift fetch-suspense react react-dom react-lazy-load-image-component styled-components use-debounce
+npm i --save @types/styled-components downshift fetch-suspense react react-dom \
+react-lazy-load-image-component styled-components use-debounce
 
 # Build and copy config file
 npm start -- -cjsm
