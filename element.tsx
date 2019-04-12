@@ -6,6 +6,8 @@ import ReactDom from "react-dom";
 import YouTube from "./components/YouTube";
 import Error from "./components/Error";
 
+declare var CustomElement;
+
 CustomElement.init((element, _context) => {
   ReactDom.render(
     element.config.apiKey ? (
