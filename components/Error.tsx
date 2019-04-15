@@ -5,6 +5,7 @@ const StyledDiv = styled.div`
   display: flex;
   justify-content: center;
   color: #f44336;
+  background-color: #ffffff;
 `;
 
 const Error = ({ text }) => {
