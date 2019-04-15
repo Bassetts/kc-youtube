@@ -10,7 +10,7 @@ declare var CustomElement;
 
 CustomElement.init((element, _context) => {
   ReactDom.render(
-    element.config.apiKey ? (
+    element.config && element.config.apiKey ? (
       <YouTube
         isDisabled={element.disabled}
         customElementApi={CustomElement}
