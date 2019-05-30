@@ -20,8 +20,8 @@ npm install
 git clone https://github.com/Bassetts/kc-youtube.git ./client/custom-elements/kc-youtube
 
 # Install project dependencies
-npm i --save @types/styled-components downshift fetch-suspense react react-dom \
-react-lazy-load-image-component styled-components use-debounce
+npm i --save @types/styled-components@^4.1.13 downshift@^1.1.2 fetch-suspense@^1.1.0 react@^16.8.4 react-dom@^16.8.4  \
+react-lazy-load-image-component@^1.3.2 styled-components@^4.2.0 use-debounce@^1.1.2
 
 # Build and copy config file
 npm start -- -cjsm
